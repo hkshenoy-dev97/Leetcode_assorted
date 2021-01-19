@@ -1,0 +1,23 @@
+int solve(vector<int>& a) {
+    unordered_map<int,int> help;
+    int n=a.size();
+    int ans=0,c=0,las=0,uni=0;
+
+    for(int i=0;i<n;i++){
+        
+        help[a[i]]++;
+        c+=a[i];
+        if(help[a[i]]==1)uni++;
+        while(uni != i-las+1){
+            help[a[las]]--;
+            c-=a[las];
+            if(help[a[las]]==0)uni--;
+            las++;
+        }
+        ans=max(ans,c);
+
+    }
+    return ans;
+
+
+}
