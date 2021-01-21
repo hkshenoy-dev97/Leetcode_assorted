@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int find_pivot(vector<int> a,int lo,int hi){
+        if(lo>hi)return -1;
+        if(lo ==  hi)return lo;
+        
+        int m=(hi+lo)/2;
+        
+        if(m<hi and a[m]>a[m+1])return m;
+        if(m>lo and a[m]<a[m-1]) return m-1;
+        if(a[lo] > a[m]) return find_pivot(a,lo,m-1);
+        return find_pivot(a,m+1,hi);
+        
+    }
+    
+    int b_search(vector<int> a,int lo,int hi,int t){
+        if(lo>hi)return -1;
+        int m=(hi+lo)/2;
+        if(a[m]==t)return m;
+        if(a[m]>t)return b_search(a,lo,m-1,t);
+        return b_search(a,m+1,hi,t);
+    }
+    int search(vector<int>& nums, int target) {
+        int n=nums.size();
+        int lo=0;
+        int hi=n-1;
+        int p=find_pivot(nums,0,n-1);
+        
+        if(p == -1)return b_search(nums,0,n-1,target);
+        
+        if(target == nums[p] ) return p;
+        
+        if(nums[0] <=  target) return b_search(nums,0,p-1,target);
+        return b_search(nums,p+1,n-1,target);
+    
+    }
+};
