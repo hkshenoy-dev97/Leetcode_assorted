@@ -1,0 +1,42 @@
+class LRUCache {
+public:
+    map<int,int> key_val,key_time;
+    multiset< pair<int,int> > cache;
+    int t=0,c=0;
+    LRUCache(int capacity) {
+        c=capacity;
+        key_val.clear();
+    }
+    
+    int get(int key) {
+        t++;
+        if(key_val.find(key) == key_val.end())return -1;
+        cache.erase(cache.find({key_time[key],key}));
+        key_time[key]=t;
+        cache.insert({key_time[key],key});
+        return key_val[key];
+    }
+    
+    void put(int key, int value) {
+        t++;
+        if(key_val.find(key) != key_val.end()) cache.erase(cache.find({key_time[key],key}));
+        key_val[key]=value;
+        key_time[key]=t;
+        cache.insert({key_time[key],key});
+        
+        if(cache.size() > c){
+            auto it=*cache.begin();
+            key_val.erase(it.second);
+            key_time.erase(it.second);
+            cache.erase(cache.begin());
+        }
+        
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
