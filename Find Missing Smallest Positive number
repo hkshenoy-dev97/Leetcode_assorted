@@ -1,0 +1,13 @@
+int missingNumber(int a[], int n) { 
+    for(int i=0;i<n;i++){
+        int cp=a[i]-1;
+        while(a[i]>=1 and a[i]<=n and a[cp]!=a[i]){
+            swap(a[cp],a[i]);
+            cp=a[i]-1;
+        }
+    }
+
+    for(int i=0;i<n;i++)if(a[i] != i+1 )return i+1;
+    return n+1;
+    
+} 
