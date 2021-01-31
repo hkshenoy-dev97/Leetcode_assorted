@@ -1,0 +1,10 @@
+for (int i = k; i < A.size(); i++)
+    {
+        // if current element is more than the root of the heap
+        if (A[i] > pq.top())
+        {
+            // replace root with the current element
+            pq.pop();
+            pq.push(A[i]);
+        }
+    }
