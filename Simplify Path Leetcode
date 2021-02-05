@@ -1,0 +1,47 @@
+class Solution {
+public:
+    string simplifyPath(string path) {
+        vector<string> dir_fol;
+        int n=path.size();
+        
+        int i=0;
+        while(i<n){
+            
+            int en=i+1;
+            string dir_name="";
+            
+            while(en<n and path[en] != '/'){
+                dir_name+=path[en];
+                en++;
+            }
+            i=en; 
+            if(dir_name.size()>0){
+                
+                if(dir_name.size()==1){
+                    
+                    if(dir_name == ".")continue;
+                    else dir_fol.push_back(dir_name);
+                    
+                }else if(dir_name.size()==2){
+                    
+                    if(dir_name == ".." ){
+                       if(dir_fol.size()) dir_fol.pop_back();
+                    }else dir_fol.push_back(dir_name); 
+                    
+                }else{
+                    dir_fol.push_back(dir_name);
+                }
+            }
+            
+               
+            
+        }
+        
+        string sol;
+        
+        
+        for(auto ch:dir_fol)sol=sol+'/'+ch;
+        if(sol.size()==0)sol='/';
+        return sol;
+    }
+};
