@@ -1,0 +1,50 @@
+class FreqStack {
+public:
+     map<int,int> freq;
+     map<int, vector<int> > las_op;
+     multiset< pair<int,pair<int,int> > > m;
+     int c;
+    FreqStack() {
+       c=1;
+       freq.clear();
+       las_op.clear();
+       m.clear();
+    }
+    
+    void push(int x) {
+        int prev_freq=freq[x];
+        int last_access=-1;
+        
+        if(las_op[x].size()){
+            last_access=las_op[x][las_op[x].size()-1];
+        }
+        
+        las_op[x].push_back(c);
+        freq[x]++;
+        
+        m.insert({freq[x],{c,x}});    
+        c++;
+    }
+    
+    int pop() {
+        
+        auto it=*(-- m.end());
+        
+        int x=it.second.second;
+        
+        freq[x]--;
+        las_op[x].pop_back();
+        
+        
+        m.erase(--m.end());
+        return x;
+        
+    }
+};
+
+/**
+ * Your FreqStack object will be instantiated and called as such:
+ * FreqStack* obj = new FreqStack();
+ * obj->push(x);
+ * int param_2 = obj->pop();
+ */
