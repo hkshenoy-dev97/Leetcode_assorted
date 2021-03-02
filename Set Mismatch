@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        int xo_orig=0;
+        int xo_curr=0;
+        int rep_num=-1;
+        int n=nums.size();
+        
+        for(int i=1;i<=n;i++)xo_orig ^= i,xo_curr ^= nums[i-1];
+        
+        for(int i=0;i<n;i++){
+            int ind=abs(nums[i])-1;
+            
+            if(nums[ind]<0){
+                rep_num=abs(nums[i]);
+                break;
+            }
+            nums[ind]*=-1;
+        }
+        
+        xo_curr ^= rep_num;
+        
+        return {rep_num,xo_orig ^xo_curr};
+    }
+};
