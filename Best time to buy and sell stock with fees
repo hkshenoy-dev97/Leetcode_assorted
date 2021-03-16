@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int n,f;
+    vector<int> p;
+    int dp[50005][2];
+    int memo[50005][2];
+    
+    int solve(int ind,int poss){
+        if(ind>=n)return 0;
+        
+        if(memo[ind][poss]) return dp[ind][poss];
+        memo[ind][poss]=1;
+        int res=0;
+        
+        if(poss){
+            res=max(res,solve(ind+1,poss));
+            res=max(res,-1*p[ind]+solve(ind+1,0));
+        }else{
+            res=max(res,p[ind]-f+solve(ind+1,1));
+            res=max(res,solve(ind+1,poss));
+        }
+        
+        
+        
+        return dp[ind][poss]=res;
+        
+        
+    }
+    
+    int maxProfit(vector<int>& prices, int fee) {
+       p=prices;
+       f=fee;
+       n=p.size();
+       return solve(0,1);
+        
+    }
+};
