@@ -1,0 +1,61 @@
+class UndergroundSystem {
+public:
+    map<string,int> hash_station;
+    vector<pair<int,int> > adj[200005];
+    map<int,pair<int,int> > checkin;
+    map<int,pair<int,int> > checkout;
+    int c=1;
+    UndergroundSystem() {
+        hash_station.clear();
+        checkin.clear();
+        checkout.clear();
+        
+    }
+    
+    int get_hash(string s){
+        if(hash_station.find(s) == hash_station.end()){
+            hash_station[s]=c;
+            c++;
+        }
+        return hash_station[s];
+    }
+    
+    void checkIn(int id, string stationName, int t) {
+        int hsh_station=get_hash(stationName);
+        checkin[id]={hsh_station,t};
+    }
+    
+    void checkOut(int id, string stationName, int t) {
+        int hsh_station=get_hash(stationName);
+        checkout[id]={hsh_station,t};
+        
+        int chk_in_st=checkin[id].first;
+        int chk_in_time=checkin[id].second;
+        int j_time=t-chk_in_time;
+        
+        adj[hsh_station].push_back({chk_in_st,j_time});
+    }
+    
+    double getAverageTime(string startStation, string endStation) {
+            int hsh_end=get_hash(endStation);
+            int hsh_start=get_hash(startStation);
+            double no_journey=0.0,total_time=0.0;
+        
+            for(auto it:adj[hsh_end]){
+                if(it.first==hsh_start){
+                    no_journey=no_journey+1.0;
+                    total_time=total_time+(double)it.second;
+                }
+            }
+        
+        return  total_time/no_journey;
+    }
+};
+
+/**
+ * Your UndergroundSystem object will be instantiated and called as such:
+ * UndergroundSystem* obj = new UndergroundSystem();
+ * obj->checkIn(id,stationName,t);
+ * obj->checkOut(id,stationName,t);
+ * double param_3 = obj->getAverageTime(startStation,endStation);
+ */
