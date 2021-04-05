@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool isIdealPermutation(vector<int>& A) {
+        int n=A.size();
+        
+        set<int> x;
+        x.insert(A[0]);
+        
+        for(int i=1;i<n;i++){
+            
+            if(A[i-1]>A[i]){
+                x.erase(A[i-1]);
+                if(x.upper_bound(A[i]) != x.end()){
+                    return 0;
+                }
+                x.insert(A[i-1]);
+            }else{
+                if(x.upper_bound(A[i]) != x.end()){
+                    return 0;
+                }
+            }
+            x.insert(A[i]);
+        }
+        return 1;
+        
+    }
+};
