@@ -1,0 +1,58 @@
+/**
+ * // This is the interface that allows for creating nested lists.
+ * // You should not implement it, or speculate about its implementation
+ * class NestedInteger {
+ *   public:
+ *     // Return true if this NestedInteger holds a single integer, rather than a nested list.
+ *     bool isInteger() const;
+ *
+ *     // Return the single integer that this NestedInteger holds, if it holds a single integer
+ *     // The result is undefined if this NestedInteger holds a nested list
+ *     int getInteger() const;
+ *
+ *     // Return the nested list that this NestedInteger holds, if it holds a nested list
+ *     // The result is undefined if this NestedInteger holds a single integer
+ *     const vector<NestedInteger> &getList() const;
+ * };
+ */
+
+class NestedIterator {
+public:
+    vector<int> sol;
+    int c=0;
+    void preorder(vector<NestedInteger> list){
+        int n=list.size();
+        for(int i=0;i<n;i++){
+            if(list[i].isInteger()){
+                sol.push_back(list[i].getInteger());
+            }else{
+                preorder(list[i].getList());
+            }
+        }
+    }
+    NestedIterator(vector<NestedInteger> &nestedList) {
+        sol.clear();
+        preorder(nestedList);
+        c=0;
+    }
+    
+    int next() {
+        int x=0;
+        if(c+1<=sol.size()){
+            x=sol[c];
+        }
+        c++;
+        return x;
+        
+    }
+    
+    bool hasNext() {
+        return (c+1<=sol.size());
+    }
+};
+
+/**
+ * Your NestedIterator object will be instantiated and called as such:
+ * NestedIterator i(nestedList);
+ * while (i.hasNext()) cout << i.next();
+ */
