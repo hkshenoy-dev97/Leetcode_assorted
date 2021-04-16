@@ -1,0 +1,41 @@
+class Solution {
+public:
+    string removeDuplicates(string s, int k) {
+        string sol;
+        stack<pair<int,int> > ind_lef;
+        int n=s.size();
+    
+        
+        for(int i=0;i<n;i++){
+            pair<int,int> x;
+            
+            if(ind_lef.size()==0){
+                ind_lef.push({i,1});
+            }else{
+                x=ind_lef.top();
+                if(s[x.first]==s[i]){
+                    ind_lef.push({i,x.second+1});
+                }else{
+                    ind_lef.push({i,1});
+                }
+            }
+            
+            if(ind_lef.top().second == k){
+                int rem=k;
+                while(rem--){
+                    ind_lef.pop();
+                }
+            }
+        }
+        
+        while(ind_lef.size() > 0){
+            sol=s[ind_lef.top().first]+sol;
+            ind_lef.pop();
+        }
+        
+        
+        return sol;
+        
+        
+    }
+};
