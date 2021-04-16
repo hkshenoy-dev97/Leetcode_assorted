@@ -1,0 +1,35 @@
+class Solution {
+public:
+   
+    int shortestSubarray(vector<int>& A, int K) {
+        int n=A.size();
+        int ans=n+1;
+        
+        
+        deque<int> dq;
+        long *prefix=new long[n+1];
+        prefix[0]=0;
+        
+        for(int i=0;i<n;i++){
+          prefix[i+1]=prefix[i]+A[i];  
+        }
+        dq.push_front(0);
+        
+        for(int i=1;i<=n;i++){
+            while(dq.size() and prefix[dq.back()] >= prefix[i]){
+                dq.pop_back();
+            }
+            while(dq.size() and prefix[i]-prefix[dq.front()]>=K){
+                ans=min(ans,i-dq.front());
+                dq.pop_front();
+            }    
+            dq.push_back(i);    
+        }
+        
+        
+        
+        if(ans==n+1)ans=-1;
+        return ans;
+        
+    }
+};
