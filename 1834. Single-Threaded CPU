@@ -1,0 +1,53 @@
+#define arr array
+class Solution {
+public:
+    vector<int> getOrder(vector<vector<int>>& tasks) {
+        
+        int n=tasks.size();
+        vector<arr<long,3> > a(n);
+        
+        for(int i=0;i<n;i++)a[i]={tasks[i][0],tasks[i][1],i};
+        sort(a.begin(),a.end());
+        
+        
+        vector<int> sol;
+        int en=0;
+        
+        long curr_time=a[0][0];
+        priority_queue<arr<long,3> > q;
+        
+        
+        while(q.size() or en<n){
+            
+            if(en<n and q.size()==0){
+                curr_time=a[en][0];
+                while(en<n and curr_time==a[en][0]){
+                    q.push({-a[en][1],-a[en][2],a[en][0]});
+                    en++;
+                }
+            }
+
+            
+            sol.push_back(-q.top()[1]);
+            
+            
+            
+            long time_end=curr_time-q.top()[0];
+            q.pop();
+           // cout<<time_end<<endl;
+            
+            while(en<n and a[en][0] <= time_end){
+                    q.push({-a[en][1],-a[en][2],a[en][0]});
+                    en++;
+            }
+            
+            curr_time=time_end;
+            
+            
+            
+            
+            
+        }
+        return sol;
+    }
+};
