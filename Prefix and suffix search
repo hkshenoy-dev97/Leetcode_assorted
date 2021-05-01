@@ -1,0 +1,31 @@
+class WordFilter {
+public:
+    map<string,int> help;
+    WordFilter(vector<string>& words) {
+        int n=words.size();
+        for(int i=0;i<n;i++){
+            int sz=words[i].size();
+            
+            
+            for(int j=1;j<=sz;j++){
+                string pref=words[i].substr(0,j);
+                for(int k=sz-1;k>=0;k--){
+                    string suff=words[i].substr(k,sz-k);
+                    help[pref+'|'+suff]=i+1;
+                }
+            }
+                
+        }
+    }
+    
+    int f(string prefix, string suffix) {
+        string y=prefix+'|'+suffix;
+        return help[y]-1;
+    }
+};
+
+/**
+ * Your WordFilter object will be instantiated and called as such:
+ * WordFilter* obj = new WordFilter(words);
+ * int param_1 = obj->f(prefix,suffix);
+ */
