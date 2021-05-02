@@ -1,0 +1,32 @@
+class Solution {
+public:
+
+    int getMinSwaps(string num, int k) {
+        string orig=num;
+        while(k--){
+            next_permutation(num.begin(),num.end());
+           
+        }
+        int n=num.size();
+        int ans=0;
+        for(int i=0;i<n;i++){
+            
+            if(num[i]==orig[i])continue;
+            int en=i+1;
+            for(int j=i+1;j<n;j++){
+                if(num[i]==orig[j]){
+                    en=j;
+                    break;
+                }
+            }
+            
+            for(int j=en;j>i;j--){
+                swap(orig[j],orig[j-1]);
+            }
+            ans=ans+(en-i);
+            
+        }
+        return ans;
+        
+    }
+};
