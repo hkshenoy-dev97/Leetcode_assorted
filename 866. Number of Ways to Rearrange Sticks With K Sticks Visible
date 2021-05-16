@@ -1,0 +1,20 @@
+#define ll long long
+class Solution {
+public:
+    int rearrangeSticks(int n, int k) {
+        vector<vector<ll> >dp(n+1,vector<ll> (k+1,0));
+        dp[1][1]=1;
+        ll mod=1e9+7;
+        
+        for(ll i=1;i<=n;i++){
+            for(ll j=1;j<=min((ll)i,(ll)k);j++){
+                dp[i][j]+=(dp[i-1][j] * (i-1));
+                dp[i][j]%=mod;
+                dp[i][j]+=dp[i-1][j-1];
+                dp[i][j]%=mod;
+            }        
+        }
+        
+        return (int)dp[n][k];
+    }
+};
